@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -13,69 +14,9 @@ struct node
 struct node *head = NULL;
 struct node *tail = NULL;
 
-// forward declaration of functions
-void create();
-void view();
-void insertByIndex();
-void insertByElement();
-void deletion();
-void average();
-void bubbleSort();
-
-// main function
-int main()
-{
-    int ch;
-    cout << "Create a node:" << endl;
-    create();
-    while (ch != 0)
-    {
-        cout << "1 to view a node:" << endl;
-        cout << "2 to insert a node by index:" << endl;
-        cout << "3 to insert a node by Element:" << endl;
-        cout << "4 to delete a node:" << endl;
-        cout << "5 to find average of the list:" << endl;
-        cout << "6 to sort the list:" << endl;
-        cout << "0 to end:" << endl;
-        cin >> ch;
-
-        if (ch == 1)
-        {
-            view();
-        }
-        else if (ch == 2)
-        {
-            insertByIndex();
-        }
-        else if (ch == 3)
-        {
-            insertByElement();
-        }
-        else if (ch == 4)
-        {
-            deletion();
-        }
-        else if (ch == 5)
-        {
-            average();
-        }
-        else if (ch == 6)
-        {
-            bubbleSort();
-        }
-
-        else
-        {
-            break;
-        }
-    }
-
-    return 0;
-}
-
 // function definations
 
-void create()
+void create() // creating list
 {
     int n;
     struct node *temp;
@@ -102,7 +43,7 @@ void create()
     }
 }
 
-void view()
+void view() // printing function
 {
     struct node *traverse = head;
     while (traverse != NULL)
@@ -114,24 +55,23 @@ void view()
 
 void insertByIndex() // inserstion using index
 {
-    struct node *a, *temp;
-    a = new (struct node[sizeof(struct node)]);
+    struct node *ptr, *temp;
+    ptr = new (struct node[sizeof(struct node)]);
 
-    int element, index;
+    int index;
 
     cout << "Enter the element you want to insert: ";
-    cin >> element;
+    cin >> ptr->data;
 
     cout << "Enter the place you want to insert: ";
     cin >> index;
 
-    cout << "Inserting " << element << " at " << index << " index!!" << endl;
+    cout << "Inserting " << ptr->data << " at " << index << " index!!" << endl;
 
     if (index == 1)
     {
-        a->next = head;
-        a->data = element;
-        head = a;
+        ptr->next = head;
+        head = ptr;
     }
     else
     {
@@ -140,19 +80,18 @@ void insertByIndex() // inserstion using index
         {
             temp = temp->next;
         }
-        a->next = temp->next;
-        temp->next = a;
-        a->data = element;
+        ptr->next = temp->next;
+        temp->next = ptr;
         if (temp == tail)
         {
-            tail = a;
+            tail = ptr;
         }
     }
 }
 
-void insertByElement()
+void insertByElement() // insertion after element
 {
-    struct node *ptr = head, *a;
+    struct node *ptr = head, *temp;
 
     cout << "Enter the element after you want to insert:" << endl;
     int element;
@@ -163,19 +102,19 @@ void insertByElement()
         ptr = ptr->next;
     }
 
-    a = new (struct node[sizeof(struct node)]);
+    temp = new (struct node[sizeof(struct node)]);
 
     cout << "Enter the element you want to insert:" << endl;
-    cin >> a->data;
-    a->next = ptr->next;
-    ptr->next = a;
+    cin >> temp->data;
+    temp->next = ptr->next;
+    ptr->next = temp;
     if (ptr == tail)
     {
         tail = ptr;
     }
 }
 
-void deletion()
+void deletion() // deleting elements from list
 {
     struct node *ptr, *temp;
     ptr = head;
@@ -193,10 +132,10 @@ void deletion()
     free(ptr);
 }
 
-void average()
+void average() // finding average
 {
     struct node *ptr = head;
-    float average = 0, sum = 0, number = 0;
+    float average, sum = 0, number = 0;
     while (ptr != NULL)
     {
         sum = sum + ptr->data;
@@ -207,29 +146,203 @@ void average()
     cout << "The average of the linked list = " << average << endl;
 }
 
-void bubbleSort()
+void bubbleSort() // bubble sorting the list
 {
     struct node *current = head, *nextt = NULL;
     int temp;
 
     cout << "Sorting the list....." << endl;
-    
-    while(current != NULL) 
-    {  
-        //Node nextt will point to node next to current  
-        nextt = current->next;  
-            
-        while(nextt != NULL) 
-        {  
-            //swapping coding   
-            if(current->data > nextt->data) 
-            {  
-                temp = current->data;  
-                current->data = nextt->data;  
-                nextt->data = temp;  
-            }  
-            nextt = nextt->next;  
-        }  
-        current = current->next;  
-    }      
+
+    while (current != NULL)
+    {
+        // Node nextt will point to node next to current
+        nextt = current->next;
+
+        while (nextt != NULL)
+        {
+            // swapping
+            if (current->data > nextt->data)
+            {
+                temp = current->data;
+                current->data = nextt->data;
+                nextt->data = temp;
+            }
+            nextt = nextt->next;
+        }
+        current = current->next;
+    }
+}
+
+void primeCheck() // check for prime numbers in list
+{
+    struct node *ptr = head;
+
+    while (ptr != NULL)
+    {
+        int flag = 0;
+
+        if (ptr->data == 1)
+        {
+            cout << "1 is prime:)" << endl;
+        }
+        else if (ptr->data == 0)
+        {
+            cout << "0 is not a prime:(" << endl;
+        }
+        else
+        {
+            for (int i = 2; i < ptr->data; i++)
+            {
+                if (ptr->data % 2 == 0)
+                {
+                    flag++;
+                }
+            }
+            if (flag == 0)
+            {
+                cout << ptr->data << " is a prime:)" << endl;
+            }
+            else
+            {
+                cout << ptr->data << " is not a prime:(" << endl;
+            }
+        }
+
+        ptr = ptr->next;
+    }
+}
+
+void variance_StandardDeviation() // variance and standard de
+{
+    struct node *ptr = head;
+    float standardDeviation, variance, temp, squaredSum = 0, mean, sum = 0, number = 0;
+
+    while (ptr != NULL) // mean
+    {
+        sum = sum + ptr->data;
+        number++;
+        ptr = ptr->next;
+    }
+    mean = sum / number;
+
+    ptr = head;
+    while (ptr != NULL) // variance
+    {
+        temp = (ptr->data - mean);
+        squaredSum = squaredSum + pow(temp, 2);
+        ptr = ptr->next;
+    }
+    variance = squaredSum / number;
+
+    cout << "The variance of the node = " << variance << endl;
+
+    standardDeviation = sqrt(variance); // standard deviation
+    cout << "The standard deviation of the node = " << standardDeviation << endl;
+}
+
+void bigAndSmall() // finding biggest and smallest element in the node
+{
+    struct node *ptr = head;
+    int big = 0, small = 999999999;
+    while (ptr != NULL)
+    {
+        if (ptr->data > big)
+        {
+            big = ptr->data;
+        }
+        if (ptr->data < small)
+        {
+            small = ptr->data;
+        }
+        ptr = ptr->next;
+    }
+    cout << "The biggest node in the list is " << big << endl;
+    cout << "The smallest node in the list is " << small << endl;
+}
+
+void reverse() // reversing the node
+{
+    struct node *previous = NULL;
+    struct node *current = head;
+    struct node *nexxt = NULL;
+    tail = head;
+    while (current != NULL)
+    {
+        nexxt = current->next;    // store the address of next in nexxt
+        current->next = previous; // reverse the current node's pointer to point to the prev node
+        previous = current;       // move the pointers one position ahead
+        current = nexxt;          // same function
+    }
+    head = previous;
+}
+
+// main function
+int main()
+{
+    int ch;
+    cout << "Create a node......" << endl;
+    create();
+    while (ch != 0)
+    {
+        cout << "\nEnter your choice.....!" << endl
+             << "1 to view a node:" << endl
+             << "2 to insert a node by index:" << endl
+             << "3 to insert a node by Element:" << endl
+             << "4 to delete a node:" << endl
+             << "5 to find average of the list:" << endl
+             << "6 to sort the list:" << endl
+             << "7 to check for primes:" << endl
+             << "8 to find varaince and standard deviation:" << endl
+             << "9 to find the biggest and smallest node:" << endl
+             << "10 to find reverse the node:" << endl
+             << "0 to end:" << endl;
+        cin >> ch;
+
+        if (ch == 1)
+        {
+            view();
+        }
+        else if (ch == 2)
+        {
+            insertByIndex();
+        }
+        else if (ch == 3)
+        {
+            insertByElement();
+        }
+        else if (ch == 4)
+        {
+            deletion();
+        }
+        else if (ch == 5)
+        {
+            average();
+        }
+        else if (ch == 6)
+        {
+            bubbleSort();
+        }
+        else if (ch == 7)
+        {
+            primeCheck();
+        }
+        else if (ch == 8)
+        {
+            variance_StandardDeviation();
+        }
+        else if (ch == 9)
+        {
+            bigAndSmall();
+        }
+        else if (ch == 10)
+        {
+            reverse();
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return 0;
 }
