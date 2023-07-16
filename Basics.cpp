@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
 
+// node declaration
 struct Node
 {
     int data;
@@ -28,19 +29,19 @@ struct Node * insertAtFirst(struct Node *head, int data)
 int main()
 {
     // declaration
-    struct Node *head;
+    struct Node *first;
     struct Node *second;
     struct Node *third;
 
     // memory allocation in heap
-    head = new (struct Node[sizeof(struct Node)]);
+    first = new (struct Node[sizeof(struct Node)]);
     second = new (struct Node[sizeof(struct Node)]);
     third = new (struct Node[sizeof(struct Node)]);
 
     // linking nodes
-    // setting value of head and linking it with second
-    head->data = 7;
-    head->next = second;
+    // setting value of first and linking it with second
+    first->data = 7;
+    first->next = second;
     // setting value of second and linking it with third
     second->data = 77;
     second->next = third;
@@ -49,11 +50,11 @@ int main()
     third->next = NULL;
 
     // calling traversal function
-    //traversal(head);
+    //traversal(first);
 
-    //inserting an element before head
-    head = insertAtFirst(head, 707);
-    traversal(head);
+    //inserting an element before first
+    first = insertAtFirst(first, 707);
+    traversal(first);
 
     return 0;
 }
