@@ -31,6 +31,8 @@ void create()
         cin >> ptr->name;
         cout << "Enter grade: " << endl;
         cin >> ptr->grade;
+        cout << "Enter marks:" << endl;
+        cin >> ptr->marks;
         ptr->next = NULL;
 
         if (head == NULL)
@@ -61,7 +63,11 @@ void print()
         ptr = head;
         while (ptr != NULL)
         {
-            cout << "The data is " << ptr->rollNumber << endl;
+            cout << "Name is " << ptr->name << endl;
+            cout << "Roll Number is " << ptr->rollNumber << endl;
+            cout << "Marks are " << ptr->marks << endl;
+            cout << "Grade is " << ptr->grade << endl
+                 << endl;
             ptr = ptr->next;
         }
     }
@@ -70,7 +76,11 @@ void print()
         ptr = tail;
         while (ptr != NULL)
         {
-            cout << "The data is " << ptr->rollNumber << endl;
+            cout << "Name is " << ptr->name << endl
+                 << "Roll Number is " << ptr->rollNumber << endl
+                 << "Marks are " << ptr->marks << endl
+                 << "Grade is " << ptr->grade << endl
+                 << endl;
             ptr = ptr->previous;
         }
     }
@@ -83,46 +93,87 @@ void insert()
     struct doubleLink *ptr = head, *temp;
     int index;
 
+    temp = new (struct doubleLink[sizeof(struct doubleLink)]);
+
     cout << "Enter the index where you want to insert:" << endl;
     cin >> index;
-    cout << "Enter node " << endl;
-    cin >> temp->rollNumber;
-    cout << "Enter roll number: " << endl;
-    cin >> temp->rollNumber;
+
     cout << "Enter name: " << endl;
     cin >> temp->name;
+    cout << "Enter roll number: " << endl;
+    cin >> temp->rollNumber;
     cout << "Enter grade: " << endl;
     cin >> temp->grade;
+    cout << "Enter marks: " << endl;
+    cin >> temp->marks;
+
+    temp->next = NULL;
+    temp->previous = NULL;
 
     if (index == 1)
     {
-        head->previous = ptr;
-        ptr->next = head;
-        head = ptr;
-        ptr->previous = NULL;
+        head->previous = temp;
+        temp->next = head;
+        temp->previous = NULL;
+        head = temp;
     }
     else
     {
         for (int i = 0; i < index - 2; i++)
         {
-            temp = ptr;
             ptr = ptr->next;
         }
-        if (ptr->next == NULL)
+        if (ptr == tail)
         {
-            temp->next = ptr;
-            ptr->previous = temp;
-            tail = ptr;
-            ptr->next = NULL;
+            tail->next = temp;
+            temp->previous = tail;
+            tail = temp;
         }
-        ptr->next = temp->next;
-        ptr->previous = temp;
-        temp->next = ptr;
-        temp = ptr->next;
-        temp->previous = ptr;
+        else
+        {
+            temp->previous = ptr;
+            temp->next = ptr->next;
+            ptr->next = temp;
+            ptr = temp->next;
+            ptr->previous = temp;
+        }
     }
 }
 
+void deletion()
+{
+    struct doubleLink *ptr = head, *temp;
+    cout << "Enter roll number to delete:" << endl;
+    int index;
+    cin >> index;
+
+    if(ptr->rollNumber == index)
+    {
+        head = head->next;
+        head->previous = NULL;
+        free(ptr);
+    }
+    while (ptr != tail && ptr->rollNumber != index)
+    {
+        temp = ptr;
+        ptr = ptr->next;
+    }
+
+    if (ptr == tail)
+    {
+        tail = temp;
+        temp->next = NULL;
+        free(ptr);
+    }
+    else
+    {
+        temp->next = ptr->next;
+        temp = ptr->next;
+        temp->previous = ptr->previous;
+        free(ptr);
+    }
+    
+}
 int main()
 {
     int inp;
@@ -132,20 +183,22 @@ int main()
     {
         cout << "Enter your choice:" << endl
              << "1 to print the list:" << endl
-             << "2 to insert a node in list:" << endl;
+             << "2 to insert a node:" << endl
+             << "3 to delete a node:" << endl;
 
         cin >> inp;
 
-        if (inp == 1)
+        switch (inp)
         {
+        case 1:
             print();
-        }
-        else if (inp == 2)
-        {
+            break;
+        case 2:
             insert();
-        }
-        else
-        {
+            break;
+        case 3:
+            deletion();
+        default:
             break;
         }
     }
