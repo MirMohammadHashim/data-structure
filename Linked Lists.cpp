@@ -26,7 +26,7 @@ void create() // creating list
     for (int i = 0; i < n; i++)
     {
         temp = new (struct node[sizeof(struct node)]);
-        cout << "Enter data:" << endl;
+        cout << "Enter data: ";
         cin >> temp->data;
         temp->next = NULL;
 
@@ -128,8 +128,16 @@ void deletion() // deleting elements from list
         temp = ptr;
         ptr = ptr->next;
     }
-    temp->next = ptr->next; // this step unlinkes the element from linked list
-    free(ptr);
+    if (ptr == head)
+    {
+        head = head->next;
+        free(ptr);
+    }
+    else
+    {
+        temp->next = ptr->next; // this step unlinkes the element from linked list
+        free(ptr);
+    }
 }
 
 void average() // finding average
@@ -298,49 +306,40 @@ int main()
              << "0 to end:" << endl;
         cin >> ch;
 
-        if (ch == 1)
+        switch (ch)
         {
+        case 1:
             view();
-        }
-        else if (ch == 2)
-        {
-            insertByIndex();
-        }
-        else if (ch == 3)
-        {
-            insertByElement();
-        }
-        else if (ch == 4)
-        {
-            deletion();
-        }
-        else if (ch == 5)
-        {
-            average();
-        }
-        else if (ch == 6)
-        {
-            bubbleSort();
-        }
-        else if (ch == 7)
-        {
-            primeCheck();
-        }
-        else if (ch == 8)
-        {
-            variance_StandardDeviation();
-        }
-        else if (ch == 9)
-        {
-            bigAndSmall();
-        }
-        else if (ch == 10)
-        {
-            reverse();
-        }
-        else
-        {
             break;
+        case 2:
+            insertByIndex();
+            break;
+        case 3:
+            insertByElement();
+            break;
+        case 4:
+            deletion();
+            break;
+        case 5:
+            average();
+            break;
+        case 6:
+            bubbleSort();
+            break;
+        case 7:
+            primeCheck();
+            break;
+        case 8:
+            variance_StandardDeviation();
+            break;
+        case 9:
+            bigAndSmall();
+            break;
+        case 10:
+            reverse();
+            break;
+        default:
+            cout << "Invalid argument:(\nTry again";
         }
     }
 
