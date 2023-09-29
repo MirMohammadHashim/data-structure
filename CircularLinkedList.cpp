@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+
 using namespace std;
 
 struct CircleNode
@@ -7,6 +8,7 @@ struct CircleNode
     int data;
     struct CircleNode *next;
 };
+
 struct CircleNode *head = NULL;
 
 void create() // creating nodes
@@ -31,11 +33,11 @@ void create() // creating nodes
         }
         else
         {
-            head->next = ptr;
-            head = ptr;
+            temp->next = ptr;
+            temp = ptr;
         }
     }
-    head->next = temp;
+    temp->next = head;
 }
 
 void show() // printing nodes
@@ -74,7 +76,7 @@ void insertByIndex() // insertion using index
     }
     else
     {
-        for (int i = 0; i < index - 1; i++)
+        for (int i = 0; i < index - 2; i++)
         {
             current = current->next;
         }
@@ -117,13 +119,22 @@ void deletion() // deleting elements from list
     int element;
     cin >> element;
 
-    while (ptr != NULL && ptr->data != element)
+    do
     {
         temp = ptr;
         ptr = ptr->next;
+    } while (ptr->data != element);
+    if (ptr == head)
+    {
+        temp->next = head->next;
+        head = head->next;
+        free(ptr);
     }
-    temp->next = ptr->next; // this step unlinkes the element from linked list
-    free(ptr);
+    else
+    {
+        temp->next = ptr->next; // this step unlinkes the element from linked list
+        free(ptr);
+    }
 }
 
 void average() // finding average
@@ -212,20 +223,22 @@ void variance_StandardDeviation() // variance and standard de
     float standardDeviation, variance, temp, squaredSum = 0, mean, sum = 0, number = 0;
 
     // mean
-    do{
+    do
+    {
         sum = sum + ptr->data;
         number++;
         ptr = ptr->next;
-    }while (ptr != head);
+    } while (ptr != head);
     mean = sum / number;
 
     ptr = head;
-     // variance
-    do{
+    // variance
+    do
+    {
         temp = (ptr->data - mean);
         squaredSum = squaredSum + pow(temp, 2);
         ptr = ptr->next;
-    }while (ptr != head);
+    } while (ptr != head);
     variance = squaredSum / number;
 
     cout << "The variance of the node = " << variance << endl;
@@ -238,8 +251,9 @@ void bigAndSmall() // finding biggest and smallest element in the node
 {
     struct CircleNode *ptr = head;
     int big = 0, small = 999999999;
-    
-    do{
+
+    do
+    {
         if (ptr->data > big)
         {
             big = ptr->data;
@@ -249,11 +263,14 @@ void bigAndSmall() // finding biggest and smallest element in the node
             small = ptr->data;
         }
         ptr = ptr->next;
-    }while (ptr != head);
+    } while (ptr != head);
     cout << "The biggest node in the list is " << big << endl;
     cout << "The smallest node in the list is " << small << endl;
 }
 
+void reverse()
+{
+}
 int main()
 {
     int ch;
@@ -275,44 +292,40 @@ int main()
              << "0 to end:" << endl;
         cin >> ch;
 
-        if (ch == 1)
+        switch (ch)
         {
+        case 1:
             show();
-        }
-        else if (ch == 2)
-        {
+            break;
+        case 2:
             insertByIndex();
-        }
-        else if (ch == 3)
-        {
+            break;
+        case 3:
             insertByElement();
-        }
-        else if (ch == 4)
-        {
+            break;
+        case 4:
             deletion();
-        }
-        else if (ch == 5)
-        {
+            break;
+        case 5:
             average();
-        }
-        else if (ch == 6)
-        {
+            break;
+        case 6:
             bubbleSort();
-        }
-        else if (ch == 7)
-        {
+            break;
+        case 7:
             primeCheck();
-        }
-        else if (ch == 8)
-        {
+            break;
+        case 8:
             variance_StandardDeviation();
-        }
-        else if (ch == 9)
-        {
+            break;
+        case 9:
             bigAndSmall();
-        }
-        else
-        {
+            break;
+        case 10:
+            reverse();
+            break;
+        default:
+            cout << "Invalid argument:(";
             break;
         }
     }
