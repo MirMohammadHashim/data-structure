@@ -1,3 +1,5 @@
+
+
 #include <iostream>
 #include <cmath>
 
@@ -270,6 +272,18 @@ void bigAndSmall() // finding biggest and smallest element in the node
 
 void reverse()
 {
+    struct CircleNode *previous = NULL;
+    struct CircleNode *current = head;
+    struct CircleNode *nexxt = NULL;
+
+    do
+    {
+        nexxt = current->next; // store the address of next node in nexxt
+        current->next = previous; // reverse the current node's pointer to point to the prev node
+        previous = current; // move the pointers one position ahead
+        current = nexxt; // same function
+    } while (current != head);
+    head = previous;
 }
 int main()
 {
