@@ -8,14 +8,14 @@ int stack[N];
 void push()
 {
     int x;
-    cout << "Enter data: ";
-    cin >> x;
     if (top == N - 1)
     {
         cout << "Stack is full:(" << endl;
     }
     else
     {
+        cout << "Enter data: ";
+        cin >> x;
         top++;
         stack[top] = x;
     }
