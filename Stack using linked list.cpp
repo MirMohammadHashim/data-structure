@@ -36,7 +36,7 @@ void Enqueue()
 
 void Dequeue()
 {
-    if (FRONT == NULL)
+    if (FRONT == NULL && REAR == NULL)
     {
         cout << "The Queue is empty:(\nTry enqueuing some elements" << endl;
     }
@@ -51,7 +51,7 @@ void Dequeue()
 
 void front()
 {
-    if (FRONT == NULL)
+    if (FRONT == NULL && REAR == NULL)
     {
         cout << "The Queue is empty:(\nTry enqueuing some elements" << endl;
     }
@@ -63,7 +63,7 @@ void front()
 
 void isEmpty()
 {
-    if (FRONT == NULL)
+    if (FRONT == NULL && REAR == NULL)
     {
         cout << "The Queue is empty:(\nTry enqueuing some elements" << endl;
     }
@@ -75,7 +75,7 @@ void isEmpty()
 
 void display()
 {
-    if (FRONT == NULL)
+    if (FRONT == NULL && REAR == NULL)
     {
         cout << "The Queue is empty:(\nTry enqueuing some elements" << endl;
     }
