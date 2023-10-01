@@ -36,8 +36,6 @@
 
 ###
 
-<br clear="both">
-
 <img src="https://raw.githubusercontent.com/faheemfirdous/faheemfirdous/output/snake.svg" alt="Snake animation" />
 
 ###
